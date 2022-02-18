@@ -16,9 +16,9 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 
 //TODO: Construct ViewModel and provide election datasource
-class ElectionsViewModel(): ViewModel() {
+class ElectionsViewModel(private val repository: Repository): ViewModel() {
 
-    val repository = RemoteDataSourceImpl(CivicsApi.retrofitService)
+
 
     //TODO: Create live data val for upcoming elections
 

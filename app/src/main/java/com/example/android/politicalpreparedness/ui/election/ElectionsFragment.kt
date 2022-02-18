@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.android.politicalpreparedness.PoliticalPrepApplication
 //import com.example.android.politicalpreparedness.PoliticalPrepApplication
 ////import com.example.android.politicalpreparedness.data.source.remote.RemoteDataSourceImpl
 //import com.example.android.politicalpreparedness.data.source.remote.network.CivicsApi
@@ -19,9 +20,10 @@ import com.example.android.politicalpreparedness.ui.election.adapter.ElectionLis
 class ElectionsFragment: Fragment() {
 
     //TODO: Declare ViewModel
-    private val viewModel by viewModels<ElectionsViewModel>()
-//        val newRepo = RepositoryImpl(RemoteDataSourceImpl(CivicsApi.retrofitService))
-//        ElectionsViewModelFactory(newRepo)
+    private val viewModel by viewModels<ElectionsViewModel>() {
+        ElectionsViewModelFactory((activity?.application as PoliticalPrepApplication).repository)
+    }
+
 
 
     private lateinit var binding: FragmentElectionBinding
