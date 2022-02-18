@@ -6,10 +6,10 @@
     <data>
         <variable
             name="election"
-            type="com.example.android.politicalpreparedness.network.models.Election" />
+            type="com.example.android.politicalpreparedness.data.source.remote.network.models.Election" />
     </data>
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp">
@@ -25,6 +25,7 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="4dp"
                 android:textStyle="bold"
+                android:text="@{election.name}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="VIP Test Election" />
@@ -35,11 +36,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
+                android:text="@{election.electionDay.toString()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/election_title_textView"
                 app:layout_constraintTop_toBottomOf="@+id/election_title_textView"
                 tools:text="Tue May 05 EDT 2020" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>
 </layout>

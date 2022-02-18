@@ -54,7 +54,7 @@ class ElectionsFragment: Fragment() {
         val adapter = ElectionListAdapter(ElectionListAdapter.ElectionListener { election ->
             findNavController().navigate(
                 ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(
-                    election.id,
+                    election.id.toLong(),
                     election.division
                 )
             )
