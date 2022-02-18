@@ -1,4 +1,4 @@
-package com.example.android.politicalpreparedness.election.adapter
+package com.example.android.politicalpreparedness.ui.election.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.politicalpreparedness.databinding.ElectionInfoListItemBinding
-import com.example.android.politicalpreparedness.network.models.Election
+import com.example.android.politicalpreparedness.data.source.remote.network.models.Election
 
 
 

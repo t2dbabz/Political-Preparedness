@@ -1,4 +1,4 @@
-package com.example.android.politicalpreparedness.network.models
+package com.example.android.politicalpreparedness.data.source.remote.network.models
 
 import androidx.room.*
 import com.squareup.moshi.*

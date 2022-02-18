@@ -1,4 +1,4 @@
-package com.example.android.politicalpreparedness.network
+package com.example.android.politicalpreparedness.data.source.remote.network
 
 import okhttp3.OkHttpClient
 
@@ -6,7 +6,7 @@ class CivicsHttpClient: OkHttpClient() {
 
     companion object {
 
-        const val API_KEY = "" //TODO: Place your API Key Here
+        const val API_KEY = "AIzaSyDtnET1i4EWiP8EH4-TwhtmT-kRjpDIK0A" //TODO: Place your API Key Here
 
         fun getClient(): OkHttpClient {
             return Builder()
