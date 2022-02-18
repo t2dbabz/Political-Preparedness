@@ -1,5 +1,9 @@
 package com.example.android.politicalpreparedness.data.source.repository
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
+import com.example.android.politicalpreparedness.data.model.SavedElectionInfo
+import com.example.android.politicalpreparedness.data.source.local.LocalDataSource
 import com.example.android.politicalpreparedness.data.source.remote.RemoteDataSource
 import com.example.android.politicalpreparedness.data.source.remote.network.models.Election
 import com.example.android.politicalpreparedness.data.source.remote.network.models.VoterInfoResponse
@@ -8,8 +12,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class RepositoryImpl(
+class RepositoryImpl constructor(
     private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocalDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Repository {
     override suspend fun getElections(): Result<List<Election>> = withContext(ioDispatcher)  {
@@ -56,5 +61,19 @@ class RepositoryImpl(
             }
         }
 
+    }
+
+    override fun getAllSavedElections(): LiveData<Result<List<SavedElectionInfo>>> {
+        return  localDataSource.getAllSavedElections().map {
+            Result.Success(it)
+        }
+    }
+
+    override suspend fun saveFollowedElection(savedElectionInfo: SavedElectionInfo) = withContext(ioDispatcher) {
+        localDataSource.saveFollowedElection(savedElectionInfo)
+    }
+
+    override suspend fun deleteFollowedElection(savedElectionId: Int) = withContext(ioDispatcher){
+        localDataSource.deleteFollowedElection(savedElectionId)
     }
 }
