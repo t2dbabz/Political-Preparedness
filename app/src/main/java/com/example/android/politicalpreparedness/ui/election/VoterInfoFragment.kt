@@ -1,9 +1,8 @@
-package com.example.android.politicalpreparedness.election
+package com.example.android.politicalpreparedness.ui.election
 
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBinding
 
 class VoterInfoFragment : Fragment() {

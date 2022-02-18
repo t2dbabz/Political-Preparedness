@@ -1,6 +1,4 @@
-package com.example.android.politicalpreparedness.election
-
-import androidx.lifecycle.ViewModelProvider
+package com.example.android.politicalpreparedness.ui.election
 
 //TODO: Create Factory to generate VoterInfoViewModel with provided election datasource
 //class VoterInfoViewModelFactory: ViewModelProvider.Factory {

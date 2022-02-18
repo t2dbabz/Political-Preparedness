@@ -1,4 +1,4 @@
-package com.example.android.politicalpreparedness.representative
+package com.example.android.politicalpreparedness.ui.representative
 
 import android.content.Context
 import android.location.Geocoder
@@ -7,9 +7,8 @@ import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
-import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
-import com.example.android.politicalpreparedness.network.models.Address
+import com.example.android.politicalpreparedness.data.source.remote.network.models.Address
 import java.util.Locale
 
 class DetailFragment : Fragment() {
