@@ -2,10 +2,9 @@ package com.example.android.politicalpreparedness.ui.election
 
 import android.content.ContentValues
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.example.android.politicalpreparedness.data.model.SavedElectionInfo
+import com.example.android.politicalpreparedness.data.model.asElectionModel
 import com.example.android.politicalpreparedness.data.source.remote.RemoteDataSourceImpl
 import com.example.android.politicalpreparedness.data.source.remote.network.CivicsApi
 import com.example.android.politicalpreparedness.data.source.remote.network.CivicsApiService
@@ -31,12 +30,16 @@ class ElectionsViewModel(private val repository: Repository): ViewModel() {
     private val _elections = MutableLiveData<List<Election>?>()
     val election: LiveData<List<Election>?> = _elections
 
+
+    val savedElections: LiveData<List<Election>> = Transformations.map(repository.getAllSavedElections()) {
+        it.asElectionModel()
+    }
+
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
     init {
         getElections()
-//        getElect()
     }
 
 
@@ -69,5 +72,6 @@ class ElectionsViewModel(private val repository: Repository): ViewModel() {
 
         }
     }
+
 
 }

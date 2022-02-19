@@ -71,6 +71,22 @@ class ElectionsFragment: Fragment() {
 
         })
 
+        val savedElectionsAdapter = ElectionListAdapter(ElectionListAdapter.ElectionListener { election ->
+            findNavController().navigate(
+                ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(
+                    election.id.toLong(),
+                    election.division
+                )
+            )
+        })
+
+        binding.savedElectionsRecyclerView.adapter = savedElectionsAdapter
+        binding.savedElectionsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        viewModel.savedElections.observe(viewLifecycleOwner, {
+            savedElectionsAdapter.submitList(it)
+        })
+
     }
 
     //TODO: Refresh adapters when fragment loads
