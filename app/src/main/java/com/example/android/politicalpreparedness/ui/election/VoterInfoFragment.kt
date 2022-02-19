@@ -1,15 +1,22 @@
 package com.example.android.politicalpreparedness.ui.election
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.android.politicalpreparedness.PoliticalPrepApplication
 import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBinding
 
 class VoterInfoFragment : Fragment() {
 
-    private val viewModel by viewModels<VoterInfoViewModel>()
+    private val viewModel by viewModels<VoterInfoViewModel>() {
+        VoterInfoViewModelFactory((activity?.application as PoliticalPrepApplication).repository)
+    }
+
+    private lateinit var binding: FragmentVoterInfoBinding
 
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -18,9 +25,8 @@ class VoterInfoFragment : Fragment() {
 
 
 
-
         //TODO: Add ViewModel values and create ViewModel
-        val binding = FragmentVoterInfoBinding.inflate(inflater)
+        binding = FragmentVoterInfoBinding.inflate(inflater)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
@@ -61,7 +67,48 @@ class VoterInfoFragment : Fragment() {
             viewModel.getVoterInfo(address, electionId)
         }
 
+        viewModel.checkIfElectionFollowed(electionId.toInt())
 
+
+        viewModel.isElectionFollowed.observe(viewLifecycleOwner,{ isFollowed ->
+            if (isFollowed == true){
+                binding.followElectionButton.text = "unfollow election"
+            } else {
+                binding.followElectionButton.text = "follow election"
+            }
+        })
+
+        viewModel.electionInfoUrl.observe(viewLifecycleOwner, { url ->
+
+            url?.let {
+                loadUrl(url)
+            }
+
+        })
+
+        viewModel.votingLocationFinderUrl.observe(viewLifecycleOwner, { url ->
+
+            url?.let {
+                loadUrl(url)
+            }
+
+        })
+
+        viewModel.ballotInfoUrl.observe(viewLifecycleOwner, { url ->
+
+            url?.let {
+                loadUrl(url)
+            }
+
+        })
+
+
+    }
+
+
+    private fun loadUrl(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(intent)
     }
 
 
