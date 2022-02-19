@@ -63,10 +63,14 @@ class RepositoryImpl constructor(
 
     }
 
-    override fun getAllSavedElections(): LiveData<Result<List<SavedElectionInfo>>> {
-        return  localDataSource.getAllSavedElections().map {
-            Result.Success(it)
-        }
+
+
+    override fun getAllSavedElections(): LiveData<List<SavedElectionInfo>> {
+        return  localDataSource.getAllSavedElections()
+    }
+
+    override suspend fun getSavedElectionById(savedElectionId: Int): SavedElectionInfo = withContext(ioDispatcher) {
+        localDataSource.getSavedElectionById(savedElectionId)
     }
 
     override suspend fun saveFollowedElection(savedElectionInfo: SavedElectionInfo) = withContext(ioDispatcher) {
@@ -76,4 +80,6 @@ class RepositoryImpl constructor(
     override suspend fun deleteFollowedElection(savedElectionId: Int) = withContext(ioDispatcher){
         localDataSource.deleteFollowedElection(savedElectionId)
     }
+
+
 }

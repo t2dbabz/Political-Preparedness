@@ -5,6 +5,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.android.politicalpreparedness.data.source.remote.network.models.Division
+import com.example.android.politicalpreparedness.data.source.remote.network.models.Election
 import com.squareup.moshi.Json
 import java.util.*
 
@@ -29,3 +30,14 @@ data class SavedElectionInfo(
     val ballotInfoUrl: String? = null,
 
     )
+
+fun List<SavedElectionInfo>.asElectionModel(): List<Election> {
+    return map {
+        Election(
+            id = it.id,
+            name = it.name,
+            electionDay = it.electionDay,
+            division = it.division
+            )
+    }
+}

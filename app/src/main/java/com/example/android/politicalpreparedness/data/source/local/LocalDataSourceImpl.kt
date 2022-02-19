@@ -41,6 +41,10 @@ class LocalDataSourceImpl(
         electionDao.insertSavedElectionInfo(savedElectionInfo)
     }
 
+    override suspend fun getSavedElectionById(savedElectionId: Int): SavedElectionInfo  = withContext(ioDispatcher){
+        return@withContext electionDao.getSavedElectionById(savedElectionId)
+    }
+
     override suspend fun deleteFollowedElection(savedElectionId: Int) = withContext(ioDispatcher) {
         electionDao.deleteSavedElection(savedElectionId)
     }

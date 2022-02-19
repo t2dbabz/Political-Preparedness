@@ -17,6 +17,8 @@ interface LocalDataSource {
 
     suspend fun saveFollowedElection(savedElectionInfo: SavedElectionInfo)
 
+    suspend fun getSavedElectionById(savedElectionId: Int): SavedElectionInfo
+
     suspend fun deleteFollowedElection(savedElectionId: Int)
 
     suspend fun deleteAllElections()
