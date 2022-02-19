@@ -6,6 +6,7 @@ import com.example.android.politicalpreparedness.data.model.SavedElectionInfo
 import com.example.android.politicalpreparedness.data.source.local.LocalDataSource
 import com.example.android.politicalpreparedness.data.source.remote.RemoteDataSource
 import com.example.android.politicalpreparedness.data.source.remote.network.models.Election
+import com.example.android.politicalpreparedness.data.source.remote.network.models.RepresentativeResponse
 import com.example.android.politicalpreparedness.data.source.remote.network.models.VoterInfoResponse
 import com.example.android.politicalpreparedness.utils.Result
 import kotlinx.coroutines.CoroutineDispatcher
@@ -63,6 +64,25 @@ class RepositoryImpl constructor(
 
     }
 
+    override suspend fun getRepresentatives(address: String): Result<RepresentativeResponse> = withContext(ioDispatcher){
+        when(val response = remoteDataSource.getRepresentatives(address)) {
+            is Result.Success -> {
+                if (response.data != null) {
+                    Result.Success(response.data)
+                } else {
+                    Result.Success(null)
+                }
+            }
+
+            is Result.Error -> {
+                Result.Error(response.exception)
+            }
+
+            is Result.Loading -> {
+                Result.Loading
+            }
+        }
+    }
 
 
     override fun getAllSavedElections(): LiveData<List<SavedElectionInfo>> {
