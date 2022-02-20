@@ -1,10 +1,37 @@
 package com.example.android.politicalpreparedness.ui.representative
 
-import androidx.lifecycle.ViewModel
+import android.util.Log
+import androidx.lifecycle.*
+import com.example.android.politicalpreparedness.data.source.remote.network.models.Address
+import com.example.android.politicalpreparedness.data.source.repository.Repository
+import com.example.android.politicalpreparedness.ui.representative.model.Representative
+import com.example.android.politicalpreparedness.utils.Result
+import kotlinx.coroutines.launch
 
-class RepresentativeViewModel: ViewModel() {
+class RepresentativeViewModel(private val repository: Repository, private val savedStateHandle: SavedStateHandle): ViewModel() {
+
+
 
     //TODO: Establish live data for representatives and address
+    private val _representatives = MutableLiveData<List<Representative>>()
+    val representatives: LiveData<List<Representative>> = _representatives
+
+    val address = MutableLiveData(Address("", "", "", "", ""))
+
+
+    private val savedStateAddressObserver = Observer<Address> {
+        // Most recently added this per Mentor Diraj
+        address.value = it
+        if (it != null) {
+            getRepresentatives(it.toFormattedString())
+        }
+
+    }
+
+    init {
+        savedStateHandle.getLiveData<Address>("address").observeForever(savedStateAddressObserver)
+    }
+
 
     //TODO: Create function to fetch representatives from API from a provided address
 
@@ -22,5 +49,48 @@ class RepresentativeViewModel: ViewModel() {
     //TODO: Create function get address from geo location
 
     //TODO: Create function to get address from individual fields
+
+    fun getRepresentatives(address: String) {
+        viewModelScope.launch {
+            try {
+                when(val result = repository.getRepresentatives(address)) {
+
+                    is Result.Success -> {
+                        if (result.data != null) {
+                            val (offices, officials) = result.data
+                            Log.d("RepViewModel", result.data.offices.lastIndex.toString())
+                            _representatives.value = offices.flatMap { office ->
+                                office.getRepresentatives(officials)
+                            }
+                        }
+                    }
+
+                    is Result.Error -> {
+
+                    }
+
+                    is Result.Loading -> {
+
+                    }
+                }
+            } catch (e : Exception) {
+
+            }
+        }
+    }
+
+    fun setAddress(currentAddress: Address) {
+        address.value = currentAddress
+        savedStateHandle["address"] = currentAddress
+
+        Log.d("RepViewModel", address.value.toString())
+
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        savedStateHandle.getLiveData<Address>("address").removeObserver(savedStateAddressObserver)
+    }
+
 
 }

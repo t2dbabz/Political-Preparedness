@@ -62,8 +62,8 @@ class VoterInfoViewModel(private val repository: Repository) : ViewModel() {
                 when (val result = repository.getVoterInfo(address, electionId)) {
 
                     is Result.Success -> {
-                        if (result != null) {
-                        _voterInfo.value = result.data!!
+                        if (result.data != null) {
+                        _voterInfo.value = result?.data!!
                         _isLoading.value  = false
                         Log.d("VoterInfoViewModel", result.data.state.toString())
 

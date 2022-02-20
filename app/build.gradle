@@ -52,6 +52,7 @@ dependencies {
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$archLifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$archLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$archLifecycleVersion"
 
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$version_navigation"
@@ -76,6 +77,9 @@ dependencies {
 
     // Glide
     //TODO: Add Glide Implementation
+
+    //fragment
+    implementation "androidx.fragment:fragment-ktx:$fragment_version"
 
     //Room
     implementation "androidx.room:room-runtime:$version_room"

@@ -14,5 +14,9 @@
     <string name="unfollow_election">UnFollow Election</string>
 
     <!-- TODO: Add necessary string values -->
+    <string name="location_permission">Location Permission</string>
+    <string name="location_required_error">Location services must be enabled to use the app</string>
+    <string name="permission_denied_explanation">You need to grant location permission in order to get your location.</string>
+    <string name="settings">Settings</string>
 
 </resources>

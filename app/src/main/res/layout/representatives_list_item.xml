@@ -4,10 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="representative"
+            type="com.example.android.politicalpreparedness.ui.representative.model.Representative" />
 
     </data>
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp">
@@ -23,36 +26,44 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:src="@drawable/ic_profile"
+                profileImage="@{representative.official.photoUrl}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_profile"/>
 
             <TextView
                 android:id="@+id/representative_title"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:text="@{representative.office.name}"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/representative_profile_imageView"
                 app:layout_constraintTop_toTopOf="@+id/representative_profile_imageView"
                 tools:text="President of the United States" />
 
             <TextView
                 android:id="@+id/representative_fullName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@{representative.official.name}"
+                app:layout_constraintEnd_toStartOf="@+id/representative_website"
                 app:layout_constraintStart_toStartOf="@+id/representative_title"
                 app:layout_constraintTop_toBottomOf="@+id/representative_title"
                 tools:text="Donald J. Trump" />
 
             <TextView
                 android:id="@+id/representative_party"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
+                android:text="@{representative.official.party}"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/representative_fullName"
                 app:layout_constraintStart_toStartOf="@+id/representative_fullName"
                 app:layout_constraintTop_toBottomOf="@+id/representative_fullName"
                 tools:text="Republican Party" />
@@ -90,5 +101,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>
 </layout>
