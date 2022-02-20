@@ -80,7 +80,7 @@ class RepresentativeFragment : Fragment() {
             adapter.submitList(it)
         })
 
-        binding.buttonSearch.setOnClickListener {
+        binding.findMyRepSearchButton.setOnClickListener {
 
             viewModel.address.value?.state = binding.state.selectedItem.toString()
             val address = viewModel.address.value?.toFormattedString()
@@ -90,7 +90,7 @@ class RepresentativeFragment : Fragment() {
             hideKeyboard()
         }
 
-        binding.buttonLocation.setOnClickListener {
+        binding.useLocationSearchButton.setOnClickListener {
             getLocationAndFindReps()
         }
 
