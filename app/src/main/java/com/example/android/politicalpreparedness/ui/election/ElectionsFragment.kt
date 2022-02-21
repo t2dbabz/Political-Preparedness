@@ -62,6 +62,12 @@ class ElectionsFragment: Fragment() {
             )
         })
 
+        binding.swipeContainer.setOnRefreshListener {
+            binding.electionsRequestResponse.visibility = View.GONE
+            viewModel.getElections()
+            binding.swipeContainer.isRefreshing = false
+        }
+
         binding.upcomingElectionsRecyclerView.adapter = adapter
         binding.upcomingElectionsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
@@ -83,7 +89,39 @@ class ElectionsFragment: Fragment() {
         binding.savedElectionsRecyclerView.adapter = savedElectionsAdapter
         binding.savedElectionsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
+        viewModel.isLoading.observe(viewLifecycleOwner, { isLoading ->
+            when(isLoading) {
+                true -> {
+                    binding.upcomingElectionsProgressbar.visibility = View.VISIBLE
+                    binding.upcomingElectionsRecyclerView.visibility = View.INVISIBLE
+
+                }
+
+                false -> {
+                    binding.upcomingElectionsProgressbar.visibility = View.GONE
+                    binding.upcomingElectionsRecyclerView.visibility = View.VISIBLE
+                }
+            }
+        })
+
+        viewModel.response.observe(viewLifecycleOwner, { response ->
+            if (!response.isNullOrEmpty()) {
+                binding.electionsRequestResponse.visibility = View.VISIBLE
+                binding.electionsRequestResponse.text = response
+                binding.upcomingElectionsRecyclerView.visibility = View.INVISIBLE
+            }
+        })
+
         viewModel.savedElections.observe(viewLifecycleOwner, {
+            if(it.isEmpty()){
+                binding.savedElectionsRecyclerView.visibility = View.INVISIBLE
+                binding.savedElectionsStateTextView.visibility = View.VISIBLE
+            } else{
+                binding.savedElectionsStateTextView.visibility = View.GONE
+                binding.savedElectionsRecyclerView.visibility = View.VISIBLE
+
+            }
+
             savedElectionsAdapter.submitList(it)
         })
 

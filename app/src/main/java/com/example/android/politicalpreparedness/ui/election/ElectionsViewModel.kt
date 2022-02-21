@@ -30,13 +30,17 @@ class ElectionsViewModel(private val repository: Repository): ViewModel() {
     private val _elections = MutableLiveData<List<Election>?>()
     val election: LiveData<List<Election>?> = _elections
 
+    private val _response = MutableLiveData<String>()
+    val response : LiveData<String> = _response
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
 
     val savedElections: LiveData<List<Election>> = Transformations.map(repository.getAllSavedElections()) {
         it.asElectionModel()
     }
 
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
 
     init {
         getElections()
@@ -60,6 +64,8 @@ class ElectionsViewModel(private val repository: Repository): ViewModel() {
 
                     is Result.Error ->{
                         _isLoading.value = false
+                        _response.value = result.exception.toString()
+
                     }
 
                     is Result.Loading -> {

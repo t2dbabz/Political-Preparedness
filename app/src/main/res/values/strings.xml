@@ -25,5 +25,6 @@
     <string name="address_line_2_hint">Address Line 2</string>
     <string name="city_hint">City</string>
     <string name="zip_hint">Zip</string>
+    <string name="no_elections_saved">No Elections Saved</string>
 
 </resources>
