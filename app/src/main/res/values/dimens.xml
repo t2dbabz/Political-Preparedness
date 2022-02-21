@@ -6,6 +6,10 @@
     <dimen name="padding_normal">16dp</dimen>
     <dimen name="headline_5">24sp</dimen>
     <dimen name="headline_6">20sp</dimen>
+    <dimen name="margin_extra_small">4dp</dimen>
+    <dimen name="subtitle">16sp</dimen>
+    <dimen name="margin_image_small">35dp</dimen>
+    <dimen name="margin_image_mid">75dp</dimen>
 
     <!-- TODO: Add necessary dimension values -->s
 
