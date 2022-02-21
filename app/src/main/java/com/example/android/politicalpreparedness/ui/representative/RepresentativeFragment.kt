@@ -49,7 +49,7 @@ class RepresentativeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         binding = FragmentRepresentativeBinding.inflate(inflater)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -90,9 +90,11 @@ class RepresentativeFragment : Fragment() {
             hideKeyboard()
         }
 
+
         binding.useLocationSearchButton.setOnClickListener {
             getLocationAndFindReps()
         }
+
 
 
 
@@ -162,6 +164,8 @@ class RepresentativeFragment : Fragment() {
                     }
                 }
 
+        } else {
+            checkLocationPermissions()
         }
     }
 
@@ -169,6 +173,7 @@ class RepresentativeFragment : Fragment() {
         val geocoder = Geocoder(context, Locale.getDefault())
         return geocoder.getFromLocation(location.latitude, location.longitude, 1)
                 .map { address ->
+
                     Address(address.thoroughfare, address.subThoroughfare, address.locality, address.adminArea, address.postalCode)
                 }
                 .first()

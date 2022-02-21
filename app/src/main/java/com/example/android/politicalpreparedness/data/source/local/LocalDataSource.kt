@@ -9,7 +9,7 @@ interface LocalDataSource {
 
     suspend fun getElectionById(electionId: Int): Election
 
-    suspend fun saveElection(election: Election)
+    suspend fun saveElection(elections: List<Election>)
 
     suspend fun deleteElection(electionId: Int)
 

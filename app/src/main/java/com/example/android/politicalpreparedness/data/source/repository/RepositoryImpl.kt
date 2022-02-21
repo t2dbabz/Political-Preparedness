@@ -1,7 +1,6 @@
 package com.example.android.politicalpreparedness.data.source.repository
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import com.example.android.politicalpreparedness.data.model.SavedElectionInfo
 import com.example.android.politicalpreparedness.data.source.local.LocalDataSource
 import com.example.android.politicalpreparedness.data.source.remote.RemoteDataSource
@@ -18,25 +17,35 @@ class RepositoryImpl constructor(
     private val localDataSource: LocalDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Repository {
-    override suspend fun getElections(): Result<List<Election>> = withContext(ioDispatcher)  {
+    override suspend fun getElections(refresh: Boolean): Result<List<Election>> = withContext(ioDispatcher)  {
+        if (refresh) {
+            when (val response = remoteDataSource.getElections()) {
 
-        when(val response = remoteDataSource.getElections()) {
+                is Result.Success -> {
+                    if (response.data != null) {
+                        Result.Success(response.data)
+                    } else {
+                        Result.Success(null)
+                    }
 
-            is Result.Success -> {
-                if (response.data != null) {
-                    Result.Success(response.data)
-                } else {
-                    Result.Success(null)
+                }
+
+                is Result.Error -> {
+                    Result.Error(response.exception)
+                }
+
+                else -> {
+                    Result.Loading
                 }
 
             }
+        } else {
+            val elections = localDataSource.getElections()
+            if (elections != null) {
 
-            is Result.Error -> {
-                Result.Error(response.exception)
-            }
-
-            else -> {
-                Result.Loading
+                Result.Success(elections)
+            } else {
+                Result.Success(null)
             }
 
         }
@@ -82,6 +91,10 @@ class RepositoryImpl constructor(
                 Result.Loading
             }
         }
+    }
+
+    override suspend fun saveElection(elections: List<Election>) = withContext(ioDispatcher) {
+        localDataSource.saveElection(elections)
     }
 
 

@@ -30,7 +30,7 @@ class ElectionsFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
 
         binding = FragmentElectionBinding.inflate(inflater)
         binding.lifecycleOwner = this
@@ -64,7 +64,7 @@ class ElectionsFragment: Fragment() {
 
         binding.swipeContainer.setOnRefreshListener {
             binding.electionsRequestResponse.visibility = View.GONE
-            viewModel.getElections()
+            viewModel.refreshElections()
             binding.swipeContainer.isRefreshing = false
         }
 

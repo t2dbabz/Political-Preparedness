@@ -51,14 +51,15 @@ class ElectionsViewModel(private val repository: Repository): ViewModel() {
         viewModelScope.launch {
             try {
                 _isLoading.value = true
-                when(val result = repository.getElections()) {
+                when(val result = repository.getElections(false)) {
 
                     is Result.Success -> {
-                        if (result.data != null) {
-                            Log.d("ElectionViewModel", result.data.toString())
+                        if (result.data != null && result.data.isNotEmpty()) {
                             val elections = result.data
                             _elections.value = elections
                             _isLoading.value = false
+                        } else {
+                            refreshElections()
                         }
                     }
 
@@ -77,6 +78,42 @@ class ElectionsViewModel(private val repository: Repository): ViewModel() {
             }
 
         }
+    }
+
+     fun refreshElections() {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                when(val result = repository.getElections(true)) {
+
+                    is Result.Success -> {
+                        if (result.data != null) {
+                            val elections = result.data
+                            _elections.value = elections
+                            _isLoading.value = false
+
+                            repository.saveElection(elections)
+                        } else {
+                            _elections.value = null
+                        }
+                    }
+
+                    is Result.Error ->{
+                        _isLoading.value = false
+                        _response.value = result.exception.toString()
+
+                    }
+
+                    is Result.Loading -> {
+                        _isLoading.value = true
+                    }
+                }
+            } catch (e: Exception){
+
+            }
+
+        }
+
     }
 
 

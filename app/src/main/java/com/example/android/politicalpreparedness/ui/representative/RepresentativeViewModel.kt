@@ -18,6 +18,9 @@ class RepresentativeViewModel(private val repository: Repository, private val sa
 
     val address = MutableLiveData(Address("", "", "", "", ""))
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
 
     private val savedStateAddressObserver = Observer<Address> {
         // Most recently added this per Mentor Diraj
@@ -52,10 +55,12 @@ class RepresentativeViewModel(private val repository: Repository, private val sa
 
     fun getRepresentatives(address: String) {
         viewModelScope.launch {
+            _isLoading.value =true
             try {
                 when(val result = repository.getRepresentatives(address)) {
 
                     is Result.Success -> {
+                        _isLoading.value = false
                         if (result.data != null) {
                             val (offices, officials) = result.data
                             Log.d("RepViewModel", result.data.offices.lastIndex.toString())
@@ -66,11 +71,12 @@ class RepresentativeViewModel(private val repository: Repository, private val sa
                     }
 
                     is Result.Error -> {
+                        _isLoading.value = false
 
                     }
 
                     is Result.Loading -> {
-
+                        _isLoading.value = true
                     }
                 }
             } catch (e : Exception) {

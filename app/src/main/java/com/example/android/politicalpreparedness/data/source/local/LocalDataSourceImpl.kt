@@ -20,8 +20,8 @@ class LocalDataSourceImpl(
         return@withContext electionDao.getElectionById(electionId)
     }
 
-    override suspend fun saveElection(election: Election) = withContext(ioDispatcher) {
-        electionDao.insertElection(election)
+    override suspend fun saveElection(elections: List<Election>) = withContext(ioDispatcher) {
+        electionDao.insertElection(*elections.toTypedArray())
 
     }
 

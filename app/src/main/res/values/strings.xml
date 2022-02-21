@@ -26,5 +26,6 @@
     <string name="city_hint">City</string>
     <string name="zip_hint">Zip</string>
     <string name="no_elections_saved">No Elections Saved</string>
+    <string name="search_for_your_representatives">Search for your Representatives</string>
 
 </resources>
