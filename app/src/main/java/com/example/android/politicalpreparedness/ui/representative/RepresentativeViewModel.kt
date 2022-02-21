@@ -12,7 +12,7 @@ class RepresentativeViewModel(private val repository: Repository, private val sa
 
 
 
-    //TODO: Establish live data for representatives and address
+
     private val _representatives = MutableLiveData<List<Representative>>()
     val representatives: LiveData<List<Representative>> = _representatives
 
@@ -36,8 +36,6 @@ class RepresentativeViewModel(private val repository: Repository, private val sa
     }
 
 
-    //TODO: Create function to fetch representatives from API from a provided address
-
     /**
      *  The following code will prove helpful in constructing a representative from the API. This code combines the two nodes of the RepresentativeResponse into a single official :
 
@@ -49,9 +47,6 @@ class RepresentativeViewModel(private val repository: Repository, private val sa
 
      */
 
-    //TODO: Create function get address from geo location
-
-    //TODO: Create function to get address from individual fields
 
     fun getRepresentatives(address: String) {
         viewModelScope.launch {

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Add node to connect Election ViewModel -->
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
             android:layout_height="match_parent"
             tools:context="com.example.android.politicalpreparedness.MainActivity">
 
-            <!-- TODO: Add Upcoming Election Recycler and Header -->
+
             <TextView
                 android:id="@+id/upcoming_elections_label"
                 android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- TODO: Add Saved Election Recycler and Header -->
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/upcoming_elections_recyclerView"

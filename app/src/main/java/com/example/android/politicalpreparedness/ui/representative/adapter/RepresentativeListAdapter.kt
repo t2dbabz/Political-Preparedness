@@ -44,15 +44,8 @@ class RepresentativeViewHolder(val binding: RepresentativesListItemBinding): Rec
             showWWWLinks(it)
         }
 
-
-
-        //TODO: Show social links ** Hint: Use provided helper methods
-        //TODO: Show www link ** Hint: Use provided helper methods
-
         binding.executePendingBindings()
     }
-
-    //TODO: Add companion object to inflate ViewHolder (from)
 
     private fun showSocialLinks(channels: List<Channel>) {
         val facebookUrl = getFacebookUrl(channels)
@@ -102,7 +95,3 @@ class RepresentativeDiffCallback : DiffUtil.ItemCallback<Representative>() {
         return oldItem.official == newItem.official
     }
 }
-
-//TODO: Create RepresentativeDiffCallback
-
-//TODO: Create RepresentativeListener

@@ -32,13 +32,11 @@ import java.util.Locale
 class RepresentativeFragment : Fragment() {
 
     companion object {
-        //TODO: Add Constant for Location request
         const val REQUEST_LOCATION_PERMISSION = 21
     }
 
     private lateinit var binding: FragmentRepresentativeBinding
 
-    //TODO: Declare ViewModel
     private val viewModel: RepresentativeViewModel by viewModels {
         RepresentativeViewModelFactory((activity?.application as PoliticalPrepApplication).repository, this)
     }
@@ -54,13 +52,6 @@ class RepresentativeFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        //TODO: Establish bindings
-
-        //TODO: Define and assign Representative adapter
-
-        //TODO: Populate Representative adapter
-
-        //TODO: Establish button listeners for field and location search
         return binding.root
 
     }
@@ -102,7 +93,6 @@ class RepresentativeFragment : Fragment() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        //TODO: Handle location permission result to get location on permission granted
         if (requestCode == REQUEST_LOCATION_PERMISSION) {
             if (grantResults.isNotEmpty() && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 getLocationAndFindReps()
@@ -134,7 +124,6 @@ class RepresentativeFragment : Fragment() {
         return if (isPermissionGranted()) {
             true
         } else {
-            //TODO: Request Location permissions
             requestPermissions(
                 arrayOf<String>(Manifest.permission.ACCESS_FINE_LOCATION),
                 REQUEST_LOCATION_PERMISSION
@@ -144,7 +133,6 @@ class RepresentativeFragment : Fragment() {
     }
 
     private fun isPermissionGranted() : Boolean {
-        //TODO: Check if permission is already granted and return (true = granted, false = denied/other)
         return ContextCompat.checkSelfPermission(
             requireContext(),
             Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
@@ -152,8 +140,6 @@ class RepresentativeFragment : Fragment() {
 
     @SuppressLint("MissingPermission")
     private fun getLocationAndFindReps() {
-        //TODO: Get location from LocationServices
-        //TODO: The geoCodeLocation method is a helper function to change the lat/long location to a human readable street address
         if(checkLocationPermissions()) {
             fusedLocationProviderClient.lastLocation
                 .addOnSuccessListener { location : Location? ->

@@ -8,6 +8,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.android.politicalpreparedness.PoliticalPrepApplication
+import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBinding
 
 class VoterInfoFragment : Fragment() {
@@ -21,28 +22,17 @@ class VoterInfoFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
 
-
-
-        //TODO: Add ViewModel values and create ViewModel
         binding = FragmentVoterInfoBinding.inflate(inflater)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
 
-        //TODO: Add binding values
-
-        //TODO: Populate voter info -- hide views without provided data.
         /**
         Hint: You will need to ensure proper data is provided from previous fragment.
         */
 
-
-        //TODO: Handle loading of URLs
-
-        //TODO: Handle save button UI state
-        //TODO: cont'd Handle save button clicks
         return binding.root
     }
 
@@ -72,9 +62,9 @@ class VoterInfoFragment : Fragment() {
 
         viewModel.isElectionFollowed.observe(viewLifecycleOwner,{ isFollowed ->
             if (isFollowed == true){
-                binding.followElectionButton.text = "unfollow election"
+                binding.followElectionButton.text = getString(R.string.unfollow_election)
             } else {
-                binding.followElectionButton.text = "follow election"
+                binding.followElectionButton.text = getString(R.string.follow_election)
             }
         })
 
@@ -83,7 +73,6 @@ class VoterInfoFragment : Fragment() {
             url?.let {
                 loadUrl(url)
             }
-
         })
 
         viewModel.votingLocationFinderUrl.observe(viewLifecycleOwner, { url ->
@@ -91,7 +80,6 @@ class VoterInfoFragment : Fragment() {
             url?.let {
                 loadUrl(url)
             }
-
         })
 
         viewModel.ballotInfoUrl.observe(viewLifecycleOwner, { url ->
@@ -101,8 +89,6 @@ class VoterInfoFragment : Fragment() {
             }
 
         })
-
-
     }
 
 
@@ -110,9 +96,5 @@ class VoterInfoFragment : Fragment() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         startActivity(intent)
     }
-
-
-
-    //TODO: Create method to load URL intents
 
 }

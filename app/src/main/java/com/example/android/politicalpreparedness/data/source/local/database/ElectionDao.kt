@@ -9,15 +9,15 @@ import retrofit2.http.DELETE
 @Dao
 interface ElectionDao {
 
-    //TODO: Add insert query
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertElection(vararg election: Election)
 
-    //TODO: Add select all election query
+
     @Query("SELECT * FROM election_table")
     suspend fun getElections(): List<Election>
 
-    //TODO: Add select single election query
+
     @Query("SELECT * FROM election_table WHERE id = :electionId")
     suspend fun getElectionById(electionId: Int): Election
 
@@ -33,11 +33,11 @@ interface ElectionDao {
     @Query("SELECT * FROM saved_election_table WHERE id = :savedElectionId")
     suspend fun getSavedElectionById(savedElectionId: Int): SavedElectionInfo
 
-    //TODO: Add delete query
+
     @Query("DELETE FROM election_table WHERE id = :electionId ")
     suspend fun deleteElection(electionId: Int)
 
-    //TODO: Add clear query
+
     @Query("DELETE FROM election_table")
     suspend fun deleteAllElections()
 }

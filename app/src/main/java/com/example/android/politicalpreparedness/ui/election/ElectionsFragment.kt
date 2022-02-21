@@ -19,7 +19,7 @@ import com.example.android.politicalpreparedness.ui.election.adapter.ElectionLis
 
 class ElectionsFragment: Fragment() {
 
-    //TODO: Declare ViewModel
+
     private val viewModel by viewModels<ElectionsViewModel>() {
         ElectionsViewModelFactory((activity?.application as PoliticalPrepApplication).repository)
     }
@@ -34,19 +34,6 @@ class ElectionsFragment: Fragment() {
 
         binding = FragmentElectionBinding.inflate(inflater)
         binding.lifecycleOwner = this
-
-
-
-
-        //TODO: Add ViewModel values and create ViewModel
-
-        //TODO: Add binding values
-
-        //TODO: Link elections to voter info
-
-        //TODO: Initiate recycler adapters
-
-        //TODO: Populate recycler adapters
 
         return binding.root
     }
@@ -94,7 +81,6 @@ class ElectionsFragment: Fragment() {
                 true -> {
                     binding.upcomingElectionsProgressbar.visibility = View.VISIBLE
                     binding.upcomingElectionsRecyclerView.visibility = View.INVISIBLE
-
                 }
 
                 false -> {
@@ -119,14 +105,11 @@ class ElectionsFragment: Fragment() {
             } else{
                 binding.savedElectionsStateTextView.visibility = View.GONE
                 binding.savedElectionsRecyclerView.visibility = View.VISIBLE
-
             }
 
             savedElectionsAdapter.submitList(it)
         })
 
     }
-
-    //TODO: Refresh adapters when fragment loads
 
 }

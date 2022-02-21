@@ -38,10 +38,6 @@ class ElectionListAdapter(private val clickListener: ElectionListener): ListAdap
 
     }
 
-    //TODO: Bind ViewHolder
-
-    //TODO: Add companion object to inflate ViewHolder (from)
-
     companion object ElectionDiffCallback : DiffUtil.ItemCallback<Election>() {
         override fun areItemsTheSame(oldItem: Election, newItem: Election): Boolean {
             return oldItem === newItem
@@ -57,10 +53,3 @@ class ElectionListAdapter(private val clickListener: ElectionListener): ListAdap
     }
 
 }
-
-//TODO: Create ElectionViewHolder
-
-//TODO: Create ElectionDiffCallback
-
-//TODO: Create ElectionListener
-
