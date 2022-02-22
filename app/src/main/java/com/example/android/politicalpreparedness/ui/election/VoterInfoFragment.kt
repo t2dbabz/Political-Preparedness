@@ -43,8 +43,8 @@ class VoterInfoFragment : Fragment() {
         val electionId = bundle.argElectionId
         val division = bundle.argDivision
 
-        if(division.state.isBlank()) {
-            val address = "state:ca"
+        if(division.state.isBlank() && division.district.isBlank()) {
+            val address = "state:tx"
             println(address)
             println(electionId)
             Log.d("VoterFragment", address)
