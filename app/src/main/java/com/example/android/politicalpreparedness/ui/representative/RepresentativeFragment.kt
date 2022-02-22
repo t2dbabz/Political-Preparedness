@@ -10,6 +10,7 @@ import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
@@ -33,6 +34,7 @@ class RepresentativeFragment : Fragment() {
 
     companion object {
         const val REQUEST_LOCATION_PERMISSION = 21
+        const val MOTION_LAYOUT_STATE = "motion_layout_state"
     }
 
     private lateinit var binding: FragmentRepresentativeBinding
@@ -65,6 +67,12 @@ class RepresentativeFragment : Fragment() {
 
         binding.representativesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
+        if (savedInstanceState != null) {
+          val motionLayoutState =   savedInstanceState.getInt(MOTION_LAYOUT_STATE)
+            binding.representativeMotionLayout.transitionToState(motionLayoutState)
+            Log.i("RepFragment", "state restored")
+        }
+
 
 
         viewModel.representatives.observe(viewLifecycleOwner, {
@@ -86,10 +94,15 @@ class RepresentativeFragment : Fragment() {
             getLocationAndFindReps()
         }
 
-
-
-
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(MOTION_LAYOUT_STATE, binding.representativeMotionLayout.currentState)
+        Log.i("RepFragment", "onSaveInstanceState Called")
+    }
+
+
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
