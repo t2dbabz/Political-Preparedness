@@ -13,6 +13,8 @@ import android.provider.Settings
 import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import com.example.android.politicalpreparedness.R
 import androidx.core.app.ActivityCompat
@@ -26,6 +28,8 @@ import com.example.android.politicalpreparedness.PoliticalPrepApplication
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.data.source.remote.network.models.Address
 import com.example.android.politicalpreparedness.ui.representative.adapter.RepresentativeListAdapter
+import com.example.android.politicalpreparedness.ui.representative.adapter.setNewValue
+import com.example.android.politicalpreparedness.ui.representative.adapter.toTypedAdapter
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import java.util.Locale
@@ -80,12 +84,15 @@ class RepresentativeFragment : Fragment() {
         })
 
         binding.findMyRepSearchButton.setOnClickListener {
+            val address = Address(
+                viewModel.addressLine1.value.toString(),
+                viewModel.addressLine2.value.toString(),
+                viewModel.cityInput.value.toString(),
+                viewModel.stateInput.value.toString(),
+                viewModel.zipInput.value.toString()
+            )
 
-            viewModel.address.value?.state = binding.state.selectedItem.toString()
-            val address = viewModel.address.value?.toFormattedString()
-            if (address != null) {
-                viewModel.getRepresentatives(address)
-            }
+            viewModel.getRepresentatives(address.toFormattedString())
             hideKeyboard()
         }
 
@@ -94,6 +101,19 @@ class RepresentativeFragment : Fragment() {
             getLocationAndFindReps()
         }
 
+
+        binding.state.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                Log.i("RepFragment Spinner", position.toString())
+                val selectedState = parent?.getItemAtPosition(position).toString()
+                viewModel.onStateChanged(selectedState)
+                Log.i("RepFragment Spinner", selectedState)
+            }
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

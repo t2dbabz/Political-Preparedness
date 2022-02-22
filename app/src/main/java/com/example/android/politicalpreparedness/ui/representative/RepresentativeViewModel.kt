@@ -11,29 +11,26 @@ import kotlinx.coroutines.launch
 class RepresentativeViewModel(private val repository: Repository, private val savedStateHandle: SavedStateHandle): ViewModel() {
 
 
-
+    companion object {
+        const val ADDRESS_LINE_1 = "address_line_1"
+        const val ADDRESS_LINE_2 = "address_line_2"
+        const val CITY_INPUT = "city_input"
+        const val ZIP_INPUT = "zip_input"
+        const val STATE_INPUT = "state_input"
+    }
 
     private val _representatives = MutableLiveData<List<Representative>>()
     val representatives: LiveData<List<Representative>> = _representatives
 
-    val address = MutableLiveData(Address("", "", "", "", ""))
+    val addressLine1: MutableLiveData<String> = savedStateHandle.getLiveData(ADDRESS_LINE_1)
+    val addressLine2: MutableLiveData<String> = savedStateHandle.getLiveData(ADDRESS_LINE_2)
+    val cityInput: MutableLiveData<String>    = savedStateHandle.getLiveData(CITY_INPUT)
+    val zipInput: MutableLiveData<String> = savedStateHandle.getLiveData(ZIP_INPUT)
+    val stateInput: MutableLiveData<String> = savedStateHandle.getLiveData(STATE_INPUT)
+
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
-
-
-    private val savedStateAddressObserver = Observer<Address> {
-        // Most recently added this per Mentor Diraj
-        address.value = it
-        if (it != null) {
-            getRepresentatives(it.toFormattedString())
-        }
-
-    }
-
-    init {
-        savedStateHandle.getLiveData<Address>("address").observeForever(savedStateAddressObserver)
-    }
 
 
     /**
@@ -80,18 +77,41 @@ class RepresentativeViewModel(private val repository: Repository, private val sa
         }
     }
 
+
+
     fun setAddress(currentAddress: Address) {
-        address.value = currentAddress
-        savedStateHandle["address"] = currentAddress
 
-        Log.d("RepViewModel", address.value.toString())
+        addressLine1.value = currentAddress.line1
+        addressLine2.value = currentAddress.line2 ?: ""
+        cityInput.value = currentAddress.city
+        stateInput.value = currentAddress.state
+        zipInput.value = currentAddress.zip
 
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        savedStateHandle.getLiveData<Address>("address").removeObserver(savedStateAddressObserver)
+    fun onLine1Changed(s: CharSequence, start: Int, before: Int, count: Int) {
+        // save the corresponding value to SavedStateHandle
+        savedStateHandle[ADDRESS_LINE_1] = s.toString()
     }
 
+    fun onLine2Changed(s: CharSequence, start: Int, before: Int, count: Int) {
+        // save the corresponding value to SavedStateHandle
+        savedStateHandle[ADDRESS_LINE_2] = s.toString()
+    }
+
+    fun onCityChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        // save the corresponding value to SavedStateHandle
+        savedStateHandle[CITY_INPUT] = s.toString()
+    }
+
+    fun onZipChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        // save the corresponding value to SavedStateHandle
+        savedStateHandle[ZIP_INPUT] = s.toString()
+    }
+
+    fun onStateChanged(state: String) {
+        stateInput.value = state
+        savedStateHandle[STATE_INPUT] = state
+    }
 
 }
